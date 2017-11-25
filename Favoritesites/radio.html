@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<HTML>
+<head>
+	<title>
+	Radio
+	</title>
+	<link type="text/css" rel="stylesheet" href="/favorite%20sites.css"/>
+	
+</head>
+<body background="/Images/Black%20Background%20Hole%20Dirty%20-%202560x1600%20by%20Freeman.jpg">
+<p color="white"><font color="white" size="40px">Under Construction</font></p>
+
+<div>
+	<iframe allowtransparency="true" style="background: gray; color: gray;" src="http://runezone.com/radio/requests.php" height="250px" width="800px" frameborder="0" id="reloader" align="right" style="color:white;"></iframe>
+</div>
+
+<tbody><tr><td class="header"><div class="date"><a href="javascript:void(0)" onclick="window.open(&quot;player.php&quot;, &quot;popout&quot;, &quot;width=430px, height=300px, toolbar=no, scrollbars=no, status=no, resizable=no&quot;)">Popup Player</a> - <a href="javascript:void(0)" onclick="window.open(&quot;timetable.php&quot;, &quot;timetable&quot;, &quot;width=750px, height=650px, toolbar=no, scrollbars=yes, status=no, resizable=no&quot;)">Timetable</a></div></td></tr>
+<tr><td class="big radioholder"><div class="radioplayer">
+<!--Wavestreaming.com SHOUTcast Flash Player-->
+   <script type="text/javascript" src="http://player.wavestreamer.com/cgi-bin/swf.js?id=N0YGIF6DBA9WVRFS"></script>
+   <object type="application/x-shockwave-flash" id="scplayer" name="scplayer" data="http://player.wavestreamer.com/cgi-bin/player2.swf" width="340" height="60"><param name="allowfullscreen" value="false"><param name="allowscriptaccess" value="always"><param name="bgcolor" value="#FFFFFF"><param name="wmode" value="transparent"><param name="flashvars" value="skin=http://player.wavestreamer.com/cgi-bin/bekle/bekle.swf&amp;title=Live Stream&amp;type=sound&amp;file=http://176.31.118.194:11340/;stream.mp3&amp;&amp;duration=99999&amp;id=scplayer&amp;autostart=true"></object>
+<!--<script type="text/javascript" src="http://player.wavestreaming.com/?id=N0YGIF6DBA9WVRFS"></script>-->
+   <!--End Player-->
+</div>
+</td></tr>
+
+<tr><td class="nav">Chatbox</td></tr>
+<tr><td class="outer">
+<iframe src="http://Runezone.com/chatbox/chatfr.php?radio=true" class="radiocbox" style="width:800px; height:250px">
+Your browser does not support IFrames, needed to run the chatbox. It is advised to upgrade to a newer one.
+</iframe>
+</td></tr>
+</tbody>
+
+<div id="hide_show">
+	<a class="twitter-timeline" align="center" href="https://twitter.com/RuneRadio"  data-widget-id="396635604437311489">Tweets by @RuneRadio</a>
+</div>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script type='text/javascript'>
+var reqactive = false;
+var djid = 15610;
+var radcounter=0;
+var radcountlock=0;
+function radcountup() {
+if (radcounter==15) {
+radcounter=0;
+radio_status();
+}
+else if (radcountlock==1) {
+radcounter=0;
+}
+else {
+radcounter++;
+}
+setTimeout('radcountup()',1000);
+}
+function resetradcount() {
+radcounter=0;
+radcountlock=1;
+}
+function radio_status() {
+var http_request = false;
+try
+  {
+  // Firefox, Opera 8.0+, Safari
+  http_request=new XMLHttpRequest();
+  }
+catch (e)
+  {
+  // Internet Explorer
+  try
+    {
+    http_request=new ActiveXObject('Msxml2.XMLHTTP');
+    }
+  catch (e)
+    {
+    try
+	{
+      http_request=new ActiveXObject('Microsoft.XMLHTTP');
+      }
+    catch (e)
+      {
+      alert('Your browser does not support AJAX!');
+      return false;
+      }
+    }
+  }
+
+http_request.onreadystatechange = function() {
+
+if(http_request.readyState == 4 && http_request.status == 200) {
+var rtsplit=http_request.responseText.split('<!#DJIDBR#!>');
+if (rtsplit[0]!=djid && rtsplit[0]!='') {
+var rand = new Date().getTime();
+document.getElementById('scplayer').data='http://player.wavestreamer.com/cgi-bin/player2.swf?' + rand;
+djid=rtsplit[0];
+}
+	//document.getElementById('radio_frame').innerHTML=http_request.responseText;
+	document.getElementById('radio_frame').innerHTML=rtsplit[1];
+}
+
+}
+var chosen = 'http://runezone.com/radio/requests.php'
+http_request.open('GET', chosen, true);
+http_request.send(null);
+}
+function makerequest() {
+
+var http_request = false;
+try
+  {
+  // Firefox, Opera 8.0+, Safari
+  http_request=new XMLHttpRequest();
+  }
+catch (e)
+  {
+  // Internet Explorer
+  try
+    {
+    http_request=new ActiveXObject('Msxml2.XMLHTTP');
+    }
+  catch (e)
+    {
+    try
+	{
+      http_request=new ActiveXObject('Microsoft.XMLHTTP');
+      }
+    catch (e)
+      {
+      alert('Your browser does not support AJAX!');
+      return false;
+      }
+    }
+  }
+
+http_request.onreadystatechange = function() {
+if(http_request.readyState == 4 && http_request.status == 200) {
+	radio_status();
+}
+}
+
+var chosen = 'http://runezone.com/radio/postreq.php?';
+var params = 'title=' + statusparsemsg(document.getElementById('radio_songname').value) + '&type=' + document.getElementById('radio_reqtype').value;
+http_request.open('POST', chosen, true);
+http_request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+http_request.setRequestHeader('Content-length', params.length);
+http_request.setRequestHeader('Connection', 'close');
+http_request.send(params);
+document.getElementById('radio_songname').value='';
+}
+</script>
+
+<script type="text/javascript"><!--
+// set your interval in milliseconds
+var reloadInterval = 60000;
+// this will run when the document is fully loaded
+function init() {
+ setTimeout('reload()',reloadInterval);
+}
+// this reloads the iframe, and triggers the next reload interval
+function reload() {
+ var iframe = document.getElementById('reloader');
+ if (!iframe) return false;
+ iframe.src = iframe.src;
+ setTimeout('reload()',reloadInterval);
+}
+// load the init() function when the page is fully loaded
+window.onload = init;
+--></script>
+
+</body>
+<!-- Random Tries
+<tr>
+	<td class="big">
+		<div id="radio_frame">
+			<table class="radio_table">
+				<tbody>
+					<tr>
+						<td rowspan="3" colspan="2" style="width:50%;text-align:right;padding-right:10px;">
+							<img src="http://userserve-ak.last.fm/serve/126/76404892.png" style="max-height:100px;max-width:100px;box-shadow:0 0 10px #292929">
+						</td>
+						<td colspan="2" style="text-align:left">
+							<a target="_blank" href="/members/index.php?id=12742">DJ Reave</a> 
+							on air.
+						</td>
+					</tr>
+	<tr><td colspan="2" style="text-align:left">
+		<b>Now Playing:</b>
+	</td></tr>
+	<tr><td colspan="2" style="text-align:left">David Guetta Vs. The Egg - Love Don't Let Me Go (Walking Away)</td></tr>
+	<tr><td colspan="4">
+		<i>Requests - Closed  ||| Follow me @JReave |||</i>
+	</td></tr>
+	<tr><td colspan="4">
+		<form action="javascript:makerequest()">Request <select id="radio_reqtype" onchange="resetradcount()" onblur="radcountlock=0"> 
+		<option value="0">Song</option>
+		<option value="1">Shoutout</option>
+		<option value="2">Talkshow Topic</option>
+		<option value="3">Competition</option>
+	</select>: Request Details: <input id="radio_songname" class="longer" onfocus="resetradcount()" onkeydown="resetradcount()" onblur="radcountlock=0"> 
+	<input type="submit" value="Submit"></form></td></tr></tbody></table></div></td></tr>
+	<!--div id="player">
+      <div id="player-container">
+        <object type="application/x-shockwave-flash" id="mixstreamPlayerFlash" data="http://myradiostream.com/flash/MixStreamPlayerV2.0.swf" width="335" height="50">
+			<param name="bgcolor" value="">
+			<param name="wmode" value="transparent">
+			<param name="flashvars" value="skin=http://player.wavestreamer.com/cgi-bin/bekle/bekle.swf&amp;title=Live Stream&amp;type=sound&amp;file=http://176.31.118.194:11340/;stream.mp3&amp;&amp;duration=99999&amp;id=scplayer&amp;autostart=true<!--serverHost=s14.myradiostream.com:11340/;&amp;getStats=1&amp;autoStart=1&amp;textColour=eeeeee&amp;buttonColour=ffffff">
+		</object>
+      </div>
+      <div id="currentSong" class="text-center">Blue October - Into the Ocean&nbsp;</div>
+      <div id="playeroptions"></div>
+  </div> 
+
+  12742<!#DJIDBR#!><table class='radio_table'><tr><td rowspan='3' colspan='2' style='width:50%;text-align:right;padding-right:10px;'><img src='http://userserve-ak.last.fm/serve/126/53574933.png' style='max-height:100px;max-width:100px;box-shadow:0 0 10px #292929' /></td><td colspan='2' style='text-align:left'><a target='_blank' href='/members/index.php?id=12742'>DJ Reave</a> on air.</td></tr>
+	<tr><td colspan='2' style='text-align:left'><b>Now Playing:</b></td></tr><tr><td colspan='2' style='text-align:left'>Phoenix - Lasso</td></tr>
+	<tr><td colspan='4'><i>Requests - Closed  ||| Follow me @JReave |||</i></td></tr><tr><td colspan='4'><form action='javascript:makerequest()'>Request <select id='radio_reqtype' onchange='resetradcount()' onblur='radcountlock=0'> <option value='0'>Song</option>
+		<option value='1'>Shoutout</option>
+		<option value='2'>Talkshow Topic</option>
+		<option value='3'>Competition</option>
+	</select>: Request Details: <input id='radio_songname' class='longer' onfocus='resetradcount()' onkeydown='resetradcount()' onblur='radcountlock=0'> <input type='submit' value='Submit'></form></td></tr>
+//-->
+<footer>
+		<tr>
+			<td>
+				<a href="/Favoritesites/favorite%20sites%20main.html" target="_blank">
+					<img src="/Images/arrow-left-long.png"/>
+				</a>
+			<td>
+		</tr>
+</footer>
+
+</html>

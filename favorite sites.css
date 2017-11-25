@@ -1,0 +1,16 @@
+			head {
+				color:white;
+				}
+			img {
+				width:200px;
+				hight:200px;
+				}
+
+			table, td {
+				border: 0px #70b8ff dashed;
+				margin: auto;
+				}
+			body {
+				background-color:#343434;
+				background-image:url('http://tilden.comeze.com/Images/Black%20Background%20Hole%20Dirty%20-%202560x1600%20by%20Freeman.jpg');
+				}
